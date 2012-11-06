@@ -37,7 +37,7 @@ protected
   end
 
   def preflight_check
-    if @request.method == 'OPTIONS' then
+    if @request.method == 'OPTIONS'
       # headers["Access-Control-Allow-Origin"] = "*"
       headers['Access-Control-Allow-Origin'] = "*"
       headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
