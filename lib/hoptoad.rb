@@ -8,7 +8,6 @@ module Hoptoad
   end
 
   def self.parse_xml!(xml)
-    raise xml.class
     parsed = ActiveSupport::XmlMini.backend.parse(xml)['notice'] || raise(ApiVersionError)
     processor = get_version_processor(parsed['version'])
     processor.process_notice(parsed)
