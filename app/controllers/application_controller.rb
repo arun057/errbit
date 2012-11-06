@@ -37,12 +37,13 @@ protected
   end
 
   def preflight_check
-    if @request.method == 'OPTIONS'
+    # render :text => request, :content_type => 'text/plain'
+    if request.method == 'OPTIONS'
       # headers["Access-Control-Allow-Origin"] = "*"
       headers['Access-Control-Allow-Origin'] = "*"
       headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
-      headers['Access-Control-Allow-Headers'] = "*"
-      headers['Access-Control-Max-Age'] = 60 * 60 * 60 * 60
+      headers['Access-Control-Allow-Headers'] = "Content-Type, *"
+      headers['Access-Control-Max-Age'] = '1000'
       render :text => '', :content_type => 'text/plain'
     end
   end

@@ -5,7 +5,7 @@ class NoticesController < ApplicationController
 
   def create
     # params[:data] if the notice came from a GET request, raw_post if it came via POST
-    notice = App.report_error!(params[:data] || request.raw_post)
+    notice = App.report_error!(URI.unescape(request.raw_post) || params[:data])
     api_xml = notice.to_xml(:only => false, :methods => [:id]) do |xml|
       xml.url locate_url(notice.id, :host => Errbit::Config.host)
     end

@@ -8,6 +8,7 @@ module Hoptoad
   end
 
   def self.parse_xml!(xml)
+    raise xml.class
     parsed = ActiveSupport::XmlMini.backend.parse(xml)['notice'] || raise(ApiVersionError)
     processor = get_version_processor(parsed['version'])
     processor.process_notice(parsed)
@@ -15,10 +16,11 @@ module Hoptoad
 
   private
     def self.get_version_processor(version)
-      case version
-      when /2\.[0123]/; Hoptoad::V2
-      else;            raise ApiVersionError
-      end
+      Hoptoad::V2
+      # case version
+      # when /2\.?[0123]?/; Hoptoad::V2
+      # else;            raise ApiVersionError
+      # end
     end
 end
 
