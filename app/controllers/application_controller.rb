@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :authenticate_user!
   before_filter :set_time_zone
+  before_filter :set_access_control
 
   # Devise override - After login, if there is only one app,
   # redirect to that app's path instead of the root path (apps#index).
@@ -27,6 +28,10 @@ protected
 
   def set_time_zone
     Time.zone = current_user.time_zone if user_signed_in?
+  end
+
+  def set_access_control
+    @response.headers["Access-Control-Allow-Origin"] = "*"
   end
 
 end
