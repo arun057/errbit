@@ -3,8 +3,6 @@ class ApplicationController < ActionController::Base
 
   before_filter :authenticate_user!
   before_filter :set_time_zone
-  before_filter :preflight_check
-  after_filter :set_access_control
 
   # Devise override - After login, if there is only one app,
   # redirect to that app's path instead of the root path (apps#index).
@@ -29,23 +27,6 @@ protected
 
   def set_time_zone
     Time.zone = current_user.time_zone if user_signed_in?
-  end
-
-  def set_access_control
-    headers["Access-Control-Allow-Origin"] = "*"
-    headers['Access-Control-Request-Method'] = 'POST, GET, OPTIONS'
-  end
-
-  def preflight_check
-    # render :text => request, :content_type => 'text/plain'
-    if request.method == 'OPTIONS'
-      # headers["Access-Control-Allow-Origin"] = "*"
-      headers['Access-Control-Allow-Origin'] = "*"
-      headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
-      headers['Access-Control-Allow-Headers'] = "Content-Type, *"
-      headers['Access-Control-Max-Age'] = '1000'
-      render :text => '', :content_type => 'text/plain'
-    end
   end
 
 end
